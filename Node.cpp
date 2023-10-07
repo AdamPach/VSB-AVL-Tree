@@ -78,24 +78,70 @@ void Node::setRightNode(Node *newNode) {
     this->rightNode = newNode;
 }
 
-int Node::checkBalance() {
-    int leftHeight = -1, rightHeight = -1;
-
+Node::BalanceResult Node::checkBalance() {
+    Node::BalanceResult leftResult, rightResult;
     if(leftNode != nullptr)
-        leftHeight = leftNode->checkBalance();
+        leftResult = leftNode->checkBalance();
 
     if(rightNode != nullptr)
-        rightHeight = rightNode->checkBalance();
+        rightResult = rightNode->checkBalance();
 
-    int balance = leftHeight - rightHeight;
+    processLeftBalanceResult(leftResult);
+    processRightBalanceResult(rightResult);
 
-    if(balance >= 2)
+    return Node::BalanceResult(leftResult.height(), rightResult.height());
+}
+
+void Node::processLeftBalanceResult(Node::BalanceResult& result) {
+    if(result.balance() >= 2)
     {
-        //Left overweight
-    } else if (balance <= - 2)
+        std::cout << "The node with value " << leftNode->getValue() << " is left overweight" << std::endl;
+        this->setLeftNode(this->rotateRight(this->getLeftNode(), this->getLeftNode()->getLeftNode()));
+    } else if(result.balance() <= -2)
     {
-        //Right overweight
+        std::cout << "The node with value " << leftNode->getValue() << " is right overweight" << std::endl;
+        this->setLeftNode(this->rotateLeft(this->getLeftNode(), this->getLeftNode()->getRightNode()));
     }
+}
 
+void Node::processRightBalanceResult(Node::BalanceResult& result) {
+    if(result.balance() >= 2)
+    {
+        std::cout << "The node with value " << rightNode->getValue() << " is left overweight" << std::endl;
+        this->setRightNode(this->rotateRight(this->getRightNode(), this->getRightNode()->getLeftNode()));
+    } else if(result.balance() <= -2)
+    {
+        std::cout << "The node with value " << rightNode->getValue() << " is right overweight" << std::endl;
+        this->setRightNode(this->rotateLeft(this->getRightNode(), this->getRightNode()->getRightNode()));
+    }
+}
+
+Node * Node::rotateLeft(Node *x, Node *y) {
+    x->setRightNode(y->getLeftNode());
+    y->setLeftNode(x);
+    return y;
+}
+
+Node * Node::rotateRight(Node *x, Node *y) {
+    x->setLeftNode(y->getRightNode());
+    y->setRightNode(x);
+    return y;
+}
+
+int Node::BalanceResult::balance() {
+    return leftHeight - rightHeight;
+}
+
+int Node::BalanceResult::height() {
     return std::max(leftHeight, rightHeight) + 1;
+}
+
+Node::BalanceResult::BalanceResult(int left, int right) {
+    leftHeight = left;
+    rightHeight = right;
+}
+
+Node::BalanceResult::BalanceResult() {
+    leftHeight = -1;
+    rightHeight = -1;
 }

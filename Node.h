@@ -8,12 +8,22 @@
 
 class Node{
 public:
+    class BalanceResult
+    {
+    public:
+        BalanceResult(int left, int right);
+        BalanceResult();
+        int leftHeight;
+        int rightHeight;
+        int balance();
+        int height();
+    };
     Node(int value);
     void addNode(Node * newNode);
     int getValue();
     void printNode(int recursionLevel);
     Node * findNode(int value);
-    int checkBalance();
+    BalanceResult checkBalance();
 
     //Getters and setters
     Node * getLeftNode();
@@ -25,6 +35,12 @@ private:
 
     Node * rightNode;
     Node * leftNode;
+
+    void processLeftBalanceResult(BalanceResult& result);
+    void processRightBalanceResult(BalanceResult& result);
+    // Rotations
+    Node * rotateLeft(Node * x, Node * y);
+    Node * rotateRight(Node *x, Node *y);
 };
 
 

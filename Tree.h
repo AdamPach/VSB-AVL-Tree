@@ -16,6 +16,7 @@ public:
     void printTree();
     Node * findNode(int value);
     Node * rootNode;
+    void balanceTree();
 private:
 };
 

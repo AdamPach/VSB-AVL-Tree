@@ -14,7 +14,10 @@ void Tree::insertNode(int value) {
     if(this->rootNode == nullptr)
         this->rootNode = newNode;
     else
+    {
         this->rootNode->addNode(newNode);
+        this->balanceTree();
+    }
 }
 
 void Tree::printTree() {
@@ -41,4 +44,9 @@ Node *Tree::findNode(int value) {
         std::cout << "Node is not found" << std::endl;
 
     return foundNode;
+}
+
+void Tree::balanceTree() {
+    if(rootNode != nullptr)
+        rootNode->checkBalance();
 }
