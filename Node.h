@@ -11,10 +11,14 @@ public:
     class BalanceResult
     {
     public:
-        BalanceResult(int left, int right);
+        BalanceResult(int left, int right, int leftLeft, int leftRight, int rightLeft, int rightRight);
         BalanceResult();
         int leftHeight;
         int rightHeight;
+        int leftLeftHeight;
+        int leftRightHeight;
+        int rightLeftHeight;
+        int rightRightHeight;
         int balance();
         int height();
     };
@@ -41,6 +45,8 @@ private:
     // Rotations
     Node * rotateLeft(Node * x, Node * y);
     Node * rotateRight(Node *x, Node *y);
+    Node * rotateLeftRight(Node * x, Node * y, Node * z);
+    Node * rotateRightLeft(Node * x, Node * y, Node * z);
 };
 
 
