@@ -95,25 +95,31 @@ Node::BalanceResult Node::checkBalance() {
 void Node::processLeftBalanceResult(Node::BalanceResult& result) {
     if(result.balance() >= 2)
     {
-        std::cout << "The node with value " << leftNode->getValue() << " is left overweight" << std::endl;
         if(result.leftRightHeight > result.leftLeftHeight)
         {
             this->setLeftNode(this->rotateLeftRight(this->getLeftNode(), this->getLeftNode()->getLeftNode(), this->getLeftNode()->getLeftNode()->getRightNode()));
+            result.leftHeight --;
+            result.rightHeight ++;
         }
         else
         {
             this->setLeftNode(this->rotateRight(this->getLeftNode(), this->getLeftNode()->getLeftNode()));
+            result.leftHeight --;
+            result.rightHeight ++;
         }
     } else if(result.balance() <= -2)
     {
-        std::cout << "The node with value " << leftNode->getValue() << " is right overweight" << std::endl;
         if(result.rightLeftHeight > result.rightRightHeight)
         {
             this->setLeftNode(this->rotateRightLeft(this->getLeftNode(), this->getLeftNode()->getRightNode(), this->getLeftNode()->getRightNode()->getLeftNode()));
+            result.leftHeight ++;
+            result.rightHeight --;
         }
         else
         {
             this->setLeftNode(this->rotateLeft(this->getLeftNode(), this->getLeftNode()->getRightNode()));
+            result.leftHeight ++;
+            result.rightHeight --;
         }
     }
 }
@@ -121,7 +127,6 @@ void Node::processLeftBalanceResult(Node::BalanceResult& result) {
 void Node::processRightBalanceResult(Node::BalanceResult& result) {
     if(result.balance() >= 2)
     {
-        std::cout << "The node with value " << rightNode->getValue() << " is left overweight" << std::endl;
         if(result.leftRightHeight > result.leftLeftHeight)
         {
             this->setRightNode(this->rotateLeftRight(this->getRightNode(), this->getRightNode()->getLeftNode(), this->getRightNode()->getLeftNode()->getRightNode()));
@@ -131,17 +136,22 @@ void Node::processRightBalanceResult(Node::BalanceResult& result) {
         else
         {
             this->setRightNode(this->rotateRight(this->getRightNode(), this->getRightNode()->getLeftNode()));
+            result.leftHeight --;
+            result.rightHeight ++;
         }
     } else if(result.balance() <= -2)
     {
-        std::cout << "The node with value " << rightNode->getValue() << " is right overweight" << std::endl;
         if(result.rightLeftHeight > result.rightRightHeight)
         {
             this->setRightNode(this->rotateRightLeft(this->getRightNode(), this->getRightNode()->getRightNode(), this->getRightNode()->getRightNode()->getLeftNode()));
+            result.leftHeight ++;
+            result.rightHeight --;
         }
         else
         {
             this->setRightNode(this->rotateLeft(this->getRightNode(), this->getRightNode()->getRightNode()));
+            result.leftHeight ++;
+            result.rightHeight --;
         }
     }
 }

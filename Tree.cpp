@@ -47,6 +47,30 @@ Node *Tree::findNode(int value) {
 }
 
 void Tree::balanceTree() {
-    if(rootNode != nullptr)
-        rootNode->checkBalance();
+    if(rootNode == nullptr)
+        return;
+
+    auto result = rootNode->checkBalance();
+
+    if(result.balance() >= 2)
+    {
+        if(result.leftRightHeight > result.leftLeftHeight)
+        {
+            rootNode = rootNode->rotateLeftRight(rootNode, rootNode->getLeftNode(), rootNode->getLeftNode()->getRightNode());
+        }
+        else
+        {
+            rootNode = rootNode->rotateRight(rootNode, rootNode->getLeftNode());
+        }
+    }else if(result.balance() <= -2)
+    {
+        if(result.rightLeftHeight > result.rightRightHeight)
+        {
+            rootNode = rootNode->rotateRightLeft(rootNode, rootNode->getRightNode(), rootNode->getRightNode()->getLeftNode());
+        }
+        else
+        {
+            rootNode = rootNode->rotateLeft(rootNode, rootNode->getRightNode());
+        }
+    }
 }

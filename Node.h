@@ -34,6 +34,12 @@ public:
     Node * getRightNode();
     void setLeftNode(Node * newNode);
     void setRightNode(Node * newNode);
+
+    // Rotations
+    Node * rotateLeft(Node * x, Node * y);
+    Node * rotateRight(Node *x, Node *y);
+    Node * rotateLeftRight(Node * x, Node * y, Node * z);
+    Node * rotateRightLeft(Node * x, Node * y, Node * z);
 private:
     int value;
 
@@ -42,11 +48,6 @@ private:
 
     void processLeftBalanceResult(BalanceResult& result);
     void processRightBalanceResult(BalanceResult& result);
-    // Rotations
-    Node * rotateLeft(Node * x, Node * y);
-    Node * rotateRight(Node *x, Node *y);
-    Node * rotateLeftRight(Node * x, Node * y, Node * z);
-    Node * rotateRightLeft(Node * x, Node * y, Node * z);
 };
 
 
