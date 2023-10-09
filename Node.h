@@ -28,6 +28,7 @@ public:
     void printNode(int recursionLevel);
     Node * findNode(int value);
     BalanceResult checkBalance();
+    bool deleteNode(int value);
 
     //Getters and setters
     Node * getLeftNode();
@@ -48,6 +49,9 @@ private:
 
     void processLeftBalanceResult(BalanceResult& result);
     void processRightBalanceResult(BalanceResult& result);
+
+    Node * processDelete();
+    Node * getDeepestRightNode();
 };
 
 

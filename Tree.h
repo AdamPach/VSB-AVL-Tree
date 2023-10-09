@@ -14,6 +14,7 @@ public:
 
     void insertNode(int value);
     void printTree();
+    void deleteNode(int value);
     Node * findNode(int value);
     Node * rootNode;
     void balanceTree();

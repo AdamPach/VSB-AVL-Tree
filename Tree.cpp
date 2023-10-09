@@ -74,3 +74,15 @@ void Tree::balanceTree() {
         }
     }
 }
+
+void Tree::deleteNode(int value)
+{
+   if(rootNode == nullptr)
+       return;
+
+   if(rootNode->deleteNode(value))
+       std::cout << "Node was deleted" << std::endl;
+   else
+       std::cout << "Node wasn't found" << std::endl;
+
+}

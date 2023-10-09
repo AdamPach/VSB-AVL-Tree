@@ -20,6 +20,11 @@ int main() {
     tree->findNode(6);
     tree->findNode(20);
 
+    tree->deleteNode(2);
+    tree->deleteNode(6);
+
+    tree->printTree();
+
 
     delete tree;
     return 0;

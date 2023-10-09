@@ -178,6 +178,77 @@ Node *Node::rotateRightLeft(Node *x, Node *y, Node *z) {
     return rotateLeft(x,z);
 }
 
+bool Node::deleteNode(int value) {
+    bool tmp_result = false;
+    if(leftNode != nullptr && !tmp_result)
+    {
+        if(leftNode->getValue() == value)
+        {
+            leftNode = this->leftNode->processDelete();
+            tmp_result = true;
+        }
+        else
+            tmp_result = leftNode->deleteNode(value);
+    }
+    if(rightNode != nullptr && !tmp_result)
+    {
+        if(rightNode->getValue() == value)
+        {
+            rightNode = this->rightNode->processDelete();
+            tmp_result = true;
+        }
+        else
+            tmp_result = rightNode->deleteNode(value);
+    }
+    return tmp_result;
+}
+
+Node * Node::processDelete() {
+    if(this->leftNode != nullptr)
+    {
+        if(this->getLeftNode()->getRightNode() != nullptr )
+        {
+            Node * substituteNode = this->getLeftNode()->getDeepestRightNode();
+            this->value = substituteNode->getValue();
+            delete substituteNode;
+            return this;
+        }
+        else
+        {
+            Node * substituteNode = this->getLeftNode();
+            this->leftNode = substituteNode->leftNode;
+            this->value = substituteNode->getValue();
+            delete substituteNode;
+            return this;
+        }
+    }
+    else if(this->rightNode != nullptr)
+    {
+        Node * substituteNode = this->getRightNode();
+        this->leftNode = substituteNode->leftNode;
+        this->rightNode = substituteNode->rightNode;
+        this->value = substituteNode->getValue();
+        delete substituteNode;
+        return this;
+    }
+    return nullptr;
+}
+
+Node *Node::getDeepestRightNode() {
+    if(this->getRightNode()->getRightNode() != nullptr)
+    {
+        return this->getRightNode()->getDeepestRightNode();
+    } else if(this->getRightNode()->getLeftNode() != nullptr)
+    {
+        Node * tmp = this->getRightNode();
+        this->rightNode = tmp->getLeftNode();
+        return tmp;
+    }
+    Node * tmp = this->getRightNode();
+    rightNode = nullptr;
+    return tmp;
+}
+
 int Node::BalanceResult::balance() {
     return leftHeight - rightHeight;
 }
